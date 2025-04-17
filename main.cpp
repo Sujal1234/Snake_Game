@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <thread>
 
 void clearConsole()
 {
@@ -14,28 +16,41 @@ void clearConsole()
 #endif
 }
 
-
 constexpr size_t WIDTH = 40;
 constexpr size_t HEIGHT = 20;
 
+using Arr2D = std::vector<std::vector<char>>;
 
-void showGrid(std::vector<std::vector<char>>& gameGrid){
-    size_t gridHeight = gameGrid.size();
-    size_t gridWidth = gameGrid[0].size();
+void showGrid(Arr2D& gameGrid);
+void loop(Arr2D& grid);
+void sleep(int x);
+
+
+void showGrid(Arr2D& grid){
+    size_t gridHeight = grid.size();
+    size_t gridWidth = grid[0].size();
     
     clearConsole();
 
     for(size_t row = 0; row < gridHeight; ++row) {
         for(size_t col = 0; col < gridWidth; ++col) {
-            std::cout << gameGrid[row][col];
+            std::cout << grid[row][col];
         }
         std::cout << '\n';
     }
 
 }
 
+void loop(Arr2D& grid){
+    showGrid(grid);
+}
+
+void sleep(int x){
+    std::this_thread::sleep_for(std::chrono::milliseconds(x));
+}
+
 int main() {
-    std::vector<std::vector<char>> grid(HEIGHT, std::vector<char>(WIDTH));
+    Arr2D grid(HEIGHT, std::vector<char>(WIDTH));
 
     for (size_t row = 0; row < HEIGHT; ++row) {
         for (size_t col = 0; col < WIDTH; ++col) {
@@ -53,6 +68,9 @@ int main() {
         grid[HEIGHT - 1][col] = '#';
     }
 
-    showGrid(grid);
+    while(true){
+        showGrid(grid);
+        sleep(2000);
+    }
     return 0;
 }
