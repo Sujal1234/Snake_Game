@@ -13,13 +13,26 @@ constexpr size_t initY = HEIGHT/2;
 
 using Arr2D = std::array<std::array<char, WIDTH>, HEIGHT>;
 
-typedef struct Vec {
-    public:
-        int x {};
-        int y {};
-    
-        Vec(int xPos, int yPos);
-    } Vec;
+struct Vec{
+    int x {};
+    int y {};
+};
+
+namespace Dir {
+    enum Dir {
+        UP = 0,
+        DOWN = 1,
+        LEFT = 2,
+        RIGHT = 3
+    };
+}
+
+inline constexpr std::array<Vec, 4> dirs {{
+    {0, -1}, //UP
+    {0, 1}, //DOWN
+    {-1, 0}, //LEFT
+    {1, 0} //RIGHT
+}};
 
 inline void clearConsole()
 {

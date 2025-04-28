@@ -12,19 +12,39 @@
 #include "screen.h"
 #include "util.h"
 
-Vec::Vec(int xPos, int yPos)
-    : x {xPos}
-    , y {yPos}
-    {}
-
-
 void loop(Screen& screen);
+void gameOver();
 void sleep(int x);
 
+void gameOver(){
+    econio_normalmode();
+    std::cout << "Game over.\n";
+    std::exit(0);
+}
 
 void loop(Screen& screen){
     clearConsole();
     screen.show();
+
+    if(econio_kbhit()){
+        switch(econio_getch()) {
+            case KEY_UP:
+                screen.snake.setDir(dirs[Dir::UP]);
+                break;
+            case KEY_DOWN:
+                screen.snake.setDir(dirs[Dir::DOWN]);
+                break;
+            case KEY_LEFT:
+                screen.snake.setDir(dirs[Dir::LEFT]);
+                break;
+            case KEY_RIGHT:
+                screen.snake.setDir(dirs[Dir::RIGHT]);
+                break;
+            default:
+                break;
+        }
+    }
+
     screen.snake.update(screen.grid);
 }
 
@@ -52,7 +72,6 @@ int main() {
         sleep(750);
     }
 
-    econio_normalmode();
-    std::cout << "Game over.\n";
+    gameOver();
     return 0;
 }

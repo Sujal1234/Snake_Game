@@ -12,6 +12,7 @@ public:
     Snake(int headX, int headY);
     Vec& head();
     Vec& tail();
+    void setDir(const Vec& direction);
     void update(Arr2D& grid);
 };
 #endif

@@ -4,7 +4,7 @@
 #include <cassert>
 
 Snake::Snake(int headX, int headY) {
-    body.push_back(Vec(headX, headY));
+    body.push_back({headX, headY});
 }
     
 Vec& Snake::head(){
@@ -13,6 +13,10 @@ Vec& Snake::head(){
     
 Vec& Snake::tail(){
     return body.back();
+}
+
+void Snake::setDir(const Vec& direction){
+    velocity = direction;
 }
 
 void Snake::update(Arr2D& grid) {
