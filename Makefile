@@ -10,17 +10,19 @@ DEPFLAGS = -MMD -MP
 TARGET = snake
 
 # Source files
-SRCS = $(wildcard *.cpp)
-OBJS = $(SRCS:.cpp=.o)
-DEPS = $(OBJS:.o=.d)
+SRCS = $(wildcard src/*.cpp)
+OBJS = $(patsubst src/%.cpp, bin/%.o, $(SRCS))
+INCLUDES = -Iheaders
+DEPS = $(patsubst bin/%.o, bin/%.d, $(OBJS))
 
 # Build target
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 # Compile source files
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(DEPFLAGS) -c $< -o $@
+bin/%.o: src/%.cpp
+	@mkdir -p bin
+	$(CXX) $(CXXFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 
 # Include dependency files
 # Automatically recompile .cpp files if included .h files change

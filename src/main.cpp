@@ -24,7 +24,6 @@ void gameOver(){
 
 void loop(Screen& screen){
     clearConsole();
-    screen.show();
 
     if(econio_kbhit()){
         switch(econio_getch()) {
@@ -46,6 +45,7 @@ void loop(Screen& screen){
     }
 
     screen.snake.update(screen.grid);
+    screen.show();
 }
 
 void sleep(int x){
