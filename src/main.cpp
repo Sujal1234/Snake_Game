@@ -2,8 +2,6 @@
 #include <array>
 // #include <vector>
 #include <list>
-#include <chrono>
-#include <thread>
 #include <cassert>
 #include <csignal>
 #include "econio.h" //To handle key presses
@@ -44,13 +42,11 @@ void loop(Screen& screen){
         }
     }
 
-    screen.snake.update(screen.grid);
+    screen.snake.update(screen);
     screen.show();
 }
 
-void sleep(int x){
-    std::this_thread::sleep_for(std::chrono::milliseconds(x));
-}
+
 
 volatile std::sig_atomic_t gSignalStatus {-1};
 extern "C" void signalHandler(int signal){
@@ -69,7 +65,7 @@ int main() {
     
     while(gSignalStatus == -1){
         loop(screen);
-        sleep(750);
+        sleep(FRAME_SLEEP_TIME);
     }
 
     gameOver();

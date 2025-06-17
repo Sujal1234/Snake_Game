@@ -1,12 +1,15 @@
 #ifndef util_h
 #define util_h
+
 #include <array>
 #include <cstddef>
 #include <cstdlib>
-
+#include <chrono>
+#include <thread>
 
 constexpr size_t WIDTH = 40;
 constexpr size_t HEIGHT = 20;
+constexpr int FRAME_SLEEP_TIME = 350;
 
 constexpr size_t initX = WIDTH/2;
 constexpr size_t initY = HEIGHT/2;
@@ -19,12 +22,12 @@ struct Vec{
 };
 
 namespace Dir {
-    enum Dir {
-        UP = 0,
-        DOWN = 1,
-        LEFT = 2,
-        RIGHT = 3
-    };
+enum Dir {
+    UP = 0,
+    DOWN = 1,
+    LEFT = 2,
+    RIGHT = 3
+};
 }
 
 inline constexpr std::array<Vec, 4> dirs {{
@@ -33,6 +36,10 @@ inline constexpr std::array<Vec, 4> dirs {{
     {-1, 0}, //LEFT
     {1, 0} //RIGHT
 }};
+
+inline void sleep(int x){
+    std::this_thread::sleep_for(std::chrono::milliseconds(x));
+}
 
 inline void clearConsole()
 {

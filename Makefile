@@ -1,9 +1,9 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast \
+CXXFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wnon-virtual-dtor \
 		   -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion \
 		   -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference \
-		   -Wuseless-cast -Wdouble-promotion -Wformat=2 -pedantic -std=c++17
+		   -Wuseless-cast -Wdouble-promotion -Wformat=2 -pedantic -g -std=c++17
 DEPFLAGS = -MMD -MP
 
 # Target executable
