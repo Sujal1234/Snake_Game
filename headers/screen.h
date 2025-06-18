@@ -15,6 +15,11 @@ public:
     void show();
     void genFood();
 
+    bool isGameOver();
+    void setGameOver();
+
     Screen(Snake& snake_);
+private:
+    bool gameOver {false};
 };
 #endif

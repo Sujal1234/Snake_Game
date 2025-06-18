@@ -20,7 +20,7 @@ private:
     std::list<Vec> body {}; //Front is the head of the snake
     Vec velocity {1, 0}; //x velocity, y velocity
 
-    void move(Arr2D& grid);
+    void move(Screen& screen);
     bool eat(Screen& screen);
 };
 #endif

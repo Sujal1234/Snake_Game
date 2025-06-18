@@ -66,3 +66,11 @@ void Screen::genFood(){
     food.y = y;
     grid[static_cast<size_t>(food.y)][static_cast<size_t>(food.x)] = 'O';
 }
+
+void Screen::setGameOver(){
+    gameOver = true;
+}
+
+bool Screen::isGameOver(){
+    return gameOver;
+}

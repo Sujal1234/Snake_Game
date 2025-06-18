@@ -20,14 +20,23 @@ void Snake::setDir(const Vec& direction){
     velocity = direction;
 }
 
-void Snake::move(Arr2D& grid){
+void Snake::move(Screen& screen){
+    Arr2D& grid = screen.grid;
     //Assuming the grid currently contains snake's body
     Vec bodyHead = head();
+    Vec bodyTail = tail();
     
     assert(grid.at(static_cast<size_t>(bodyHead.y)).at(static_cast<size_t>(bodyHead.x)) == 'A');
 
     int newX = bodyHead.x + velocity.x;
     int newY = bodyHead.y + velocity.y;
+
+    if(grid[static_cast<size_t>(newY)][static_cast<size_t>(newX)] == 'A'){
+        if(newX != bodyTail.x || newY != bodyTail.y){
+            screen.setGameOver();
+            return;
+        }
+    }
 
     if(static_cast<size_t>(newY+1) >= grid.size() || newY < 1 || newX < 1 || static_cast<size_t>(newX+1) >= grid[0].size()){
         //TODO: Either game over or teleportation
@@ -35,13 +44,13 @@ void Snake::move(Arr2D& grid){
     }
 
     Vec newHead {newX, newY};
-    body.push_front(newHead);
-    
-    Vec bodyTail = tail();
 
-    grid[static_cast<size_t>(newY)][static_cast<size_t>(newX)] = 'A';
-    grid[static_cast<size_t>(bodyTail.y)][static_cast<size_t>(bodyTail.x)] = ' ';
+    //Remove tail first, because the new head position might be the old tail position
     body.pop_back();
+    grid[static_cast<size_t>(bodyTail.y)][static_cast<size_t>(bodyTail.x)] = ' ';
+
+    body.push_front(newHead);
+    grid[static_cast<size_t>(newY)][static_cast<size_t>(newX)] = 'A';
 }
 
 bool Snake::eat(Screen& screen){
@@ -67,11 +76,8 @@ bool Snake::eat(Screen& screen){
 }
 
 void Snake::update(Screen& screen) {
-    Arr2D& grid = screen.grid;
-
     if(!eat(screen)){
-        //TODO: Add death on biting tail
         //TODO: Disallow 180 deg turning
-        move(grid);
+        move(screen);
     }
 }

@@ -14,6 +14,7 @@ void loop(Screen& screen);
 void gameOver();
 void sleep(int x);
 
+//Exits program
 void gameOver(){
     econio_normalmode();
     std::cout << "Game over.\n";
@@ -44,6 +45,9 @@ void loop(Screen& screen){
 
     screen.snake.update(screen);
     screen.show();
+    if(screen.isGameOver()){
+        gameOver();
+    }
 }
 
 
