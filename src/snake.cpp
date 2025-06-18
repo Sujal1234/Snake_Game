@@ -17,6 +17,11 @@ Vec& Snake::tail(){
 }
 
 void Snake::setDir(const Vec& direction){
+    if(direction.x == -velocity.x && direction.y == -velocity.y
+       && length > 1){
+        //Don't allow 180 degree turning when there is a tail
+        return;
+    }
     velocity = direction;
 }
 
@@ -39,7 +44,6 @@ void Snake::move(Screen& screen){
     }
 
     if(static_cast<size_t>(newY+1) >= grid.size() || newY < 1 || newX < 1 || static_cast<size_t>(newX+1) >= grid[0].size()){
-        //TODO: Either game over or teleportation
         return;
     }
 
@@ -64,6 +68,7 @@ bool Snake::eat(Screen& screen){
     if(newX == screen.food.x && newY == screen.food.y){
         Vec newHead {newX, newY};
         body.push_front(newHead);
+        length++;
 
         grid[static_cast<size_t>(newY)][static_cast<size_t>(newX)] = 'A';
         screen.genFood();
@@ -77,7 +82,10 @@ bool Snake::eat(Screen& screen){
 
 void Snake::update(Screen& screen) {
     if(!eat(screen)){
-        //TODO: Disallow 180 deg turning
         move(screen);
     }
+}
+
+size_t Snake::getLength(){
+    return length;
 }
